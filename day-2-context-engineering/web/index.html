@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="COMSATS University Islamabad, Wah Campus - CampusMind Live Context Engineering Chatbot & Grounded RAG Server.">
+    <title>CUI Wah — CampusMind Live Chatbot & RAG Server</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=3.0">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Main Navigation Bar -->
+        <header class="app-navbar">
+            <div class="nav-brand-group">
+                <div class="brand-text">
+                    <span class="brand-institution">COMSATS UNIVERSITY ISLAMABAD • WAH CAMPUS</span>
+                    <h1 class="brand-title">CampusMind Live Chatbot & RAG</h1>
+                </div>
+            </div>
+
+            <!-- View Switcher Tabs -->
+            <div class="nav-tabs-group" role="tablist">
+                <button type="button" id="tabChatbot" class="nav-tab-btn active" role="tab" aria-selected="true" data-view="chatbotView">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>CampusMind Live Chatbot</span>
+                    <span class="tab-badge">Interactive</span>
+                </button>
+                <button type="button" id="tabRagStudio" class="nav-tab-btn" role="tab" aria-selected="false" data-view="ragStudioView">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                    </svg>
+                    <span>RAG Deep Audit Studio</span>
+                </button>
+            </div>
+
+            <!-- Navbar Metrics & Multi-Key Status -->
+            <div class="nav-metrics-group">
+                <div class="status-indicator">
+                    <span class="status-pulse-dot"></span>
+                    <span class="status-label" id="apiKeyStatusLabel">2 Keys Active • Auto-Failover</span>
+                </div>
+                <div class="corpus-badge">
+                    <span class="badge-count">9 Docs • 29 Chunks</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- ============================================================= -->
+            <!-- VIEW 1: CampusMind Live Interactive Chatbot (Default)         -->
+            <!-- ============================================================= -->
+            <div id="chatbotView" class="view-panel">
+                <!-- Strategy Selection Bar -->
+                <section class="strategy-selector-panel" aria-label="Context Strategy Selection">
+                    <div class="strategy-header">
+                        <div>
+                            <span class="panel-tag">Context Engineering Experimenter</span>
+                            <h2 class="panel-title">CampusMind Interactive Chatbot</h2>
+                            <p class="panel-description">Switch context strategies to observe how prompt framing, chunk retrieval, and token budgeting influence AI groundedness and avoid hallucinations.</p>
+                        </div>
+                        <div class="api-key-indicator" id="apiKeyStatusCard">
+                            <span class="key-dot pulse-success"></span>
+                            <span id="keyStatusText">2 Keys (Primary: AQ.Ab8...6-jw | Failover Ready)</span>
+                        </div>
+                    </div>
+
+                    <!-- 6 Strategy Buttons -->
+                    <div class="strategy-pills-grid" id="strategyPills">
+                        <button type="button" class="strat-pill" data-strategy="1">
+                            <span class="strat-num">1</span>
+                            <div class="strat-info">
+                                <strong>Zero Context</strong>
+                                <span>No campus records (Hallucination test)</span>
+                            </div>
+                        </button>
+                        <button type="button" class="strat-pill" data-strategy="2">
+                            <span class="strat-num">2</span>
+                            <div class="strat-info">
+                                <strong>Full Context Dump</strong>
+                                <span>All 8 campus records (Wasteful tokens)</span>
+                            </div>
+                        </button>
+                        <button type="button" class="strat-pill" data-strategy="3">
+                            <span class="strat-num">3</span>
+                            <div class="strat-info">
+                                <strong>Filtered Context</strong>
+                                <span>Keyword-filtered documents</span>
+                            </div>
+                        </button>
+                        <button type="button" class="strat-pill active" data-strategy="4">
+                            <span class="strat-num">4</span>
+                            <div class="strat-info">
+                                <strong>Production Mini-RAG</strong>
+                                <span>Top chunks + Citations [Recommended]</span>
+                            </div>
+                        </button>
+                        <button type="button" class="strat-pill" data-strategy="5">
+                            <span class="strat-num">5</span>
+                            <div class="strat-info">
+                                <strong>Conversational Memory</strong>
+                                <span>Multi-turn conversational history</span>
+                            </div>
+                        </button>
+                        <button type="button" class="strat-pill" data-strategy="6">
+                            <span class="strat-num">6</span>
+                            <div class="strat-info">
+                                <strong>Structured JSON</strong>
+                                <span>Validated entity extraction card</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Active Strategy Description Bar -->
+                    <div class="active-strategy-desc-bar" id="activeStrategyDesc">
+                        <span class="desc-badge" id="stratBadge">Strategy 4: Production Mini-RAG</span>
+                        <span class="desc-text" id="stratDescText">Scores and retrieves top chunks from campus knowledge and handbook, injecting relevant evidence with strict [DOC-XXX] citations.</span>
+                    </div>
+                </section>
+
+                <!-- Workspace Grid: Chat Window (Left) + Telemetry (Right) -->
+                <div class="chat-workspace-grid">
+                    <!-- Left: Interactive Chat Screen -->
+                    <div class="chat-main-card">
+                        <div class="chat-card-header">
+                            <div class="chat-header-user">
+                                <div class="bot-avatar">🤖</div>
+                                <div>
+                                    <h3 class="chat-title">CampusMind AI</h3>
+                                    <span class="chat-subtitle">COMSATS University Wah Campus Official Assistant</span>
+                                </div>
+                            </div>
+                            <div class="chat-header-actions">
+                                <button type="button" id="clearChatBtn" class="secondary-icon-btn" title="Clear conversation history">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                    <span>Clear Chat</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Chat Messages Stream -->
+                        <div class="chat-messages-container" id="chatMessages">
+                            <!-- Welcome Message -->
+                            <div class="chat-msg msg-bot">
+                                <div class="msg-avatar">🤖</div>
+                                <div class="msg-bubble">
+                                    <div class="msg-sender">CampusMind AI • Official Assistant</div>
+                                    <div class="msg-body">
+                                        <p>Assalam-o-Alaikum! I am <strong>CampusMind</strong>, your context-engineered campus assistant.</p>
+                                        <p>Ask me about CUI Wah hostel & mess charges, fee challan deadlines, the 80% attendance policy, SpeedCode hackathon details, bus transport routes, or scholarships!</p>
+                                        <p class="msg-tip">💡 <em>Tip: Select different strategies above to see how prompt framing directly influences answer accuracy and token efficiency.</em></p>
+                                    </div>
+                                    <div class="msg-meta">
+                                        <span class="msg-tag">System Ready</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Suggested Inquiries -->
+                        <div class="chat-quick-suggestions" id="chatQuickChips">
+                            <span class="caption">Suggested Prompts:</span>
+                            <button type="button" class="chat-chip" data-query="What are the mess and room charges for the boys hostel in Fall 2026?">Hostel Charges</button>
+                            <button type="button" class="chat-chip" data-query="When is the SpeedCode hackathon and what are team size and prize?">SpeedCode Hackathon</button>
+                            <button type="button" class="chat-chip" data-query="What is the minimum attendance required for terminal exams and penalty?">80% Attendance Rule</button>
+                            <button type="button" class="chat-chip" data-query="How many books can a BS student borrow and for how many days?">Library Borrowing</button>
+                            <button type="button" class="chat-chip" data-query="What is the tuition fee challan deadline and late fee fine?">Fee Challan Deadline</button>
+                        </div>
+
+                        <!-- Chat Input Form -->
+                        <form id="chatForm" class="chat-input-form">
+                            <input 
+                                type="text" 
+                                id="chatInput" 
+                                class="chat-input-field" 
+                                placeholder="Type your campus inquiry... (Press Enter to send)" 
+                                autocomplete="off" 
+                                required 
+                            />
+                            <button type="submit" id="chatSendBtn" class="chat-send-btn" title="Send message">
+                                <span>Send</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Right: Telemetry & In-Context Pipeline Meter -->
+                    <div class="chat-telemetry-column">
+                        <!-- Context Meter Card -->
+                        <section class="card-panel">
+                            <div class="card-header">
+                                <div class="card-header-title">
+                                    <h3 class="card-title">Context Window Meter</h3>
+                                    <span class="card-caption">Live token telemetry for active turn</span>
+                                </div>
+                                <span id="telemetryStatusBadge" class="meta-badge">Ready</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="metric-row">
+                                    <span class="metric-label">Active Strategy</span>
+                                    <strong id="meterStrategy" class="metric-val">Strategy 4: Mini-RAG</strong>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-label">Injected Context</span>
+                                    <strong id="meterContext" class="metric-val">0 chars (~0 tokens)</strong>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-label">Inference Latency</span>
+                                    <strong id="meterLatency" class="metric-val">0.00s</strong>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-label">Signal-to-Noise Ratio</span>
+                                    <strong id="meterSignal" class="metric-val">0%</strong>
+                                </div>
+                                <div class="signal-progress-bar">
+                                    <div id="signalProgressFill" class="signal-fill" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Grounded Citations Card -->
+                        <section class="card-panel">
+                            <div class="card-header">
+                                <div class="card-header-title">
+                                    <h3 class="card-title">Grounded Citations</h3>
+                                    <span class="card-caption">Evidence sources cited in response</span>
+                                </div>
+                                <span id="citationCountBadge" class="meta-badge">0 Sources</span>
+                            </div>
+                            <div class="card-body">
+                                <div id="chatCitationsList" class="citations-pills-list">
+                                    <span class="empty-note">Citations will appear when asking questions using Strategy 4 (Production Mini-RAG).</span>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Multi-Turn Conversational Memory Card -->
+                        <section class="card-panel">
+                            <div class="card-header">
+                                <div class="card-header-title">
+                                    <h3 class="card-title">Conversational Memory</h3>
+                                    <span class="card-caption">Multi-turn state tracking</span>
+                                </div>
+                                <span id="memoryTurnsBadge" class="meta-badge">0 Turns</span>
+                            </div>
+                            <div class="card-body">
+                                <div id="memoryTurnsList" class="memory-turns-container">
+                                    <span class="empty-note">Turn history is maintained and fed into context for Strategy 5 (Conversational Memory).</span>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================= -->
+            <!-- VIEW 2: Grounded RAG Studio & Deep Audit (Existing Engine)    -->
+            <!-- ============================================================= -->
+            <div id="ragStudioView" class="view-panel hidden">
+                <!-- Search & Input Section -->
+                <section class="search-panel" aria-label="Query Submission">
+                    <div class="search-panel-inner">
+                        <form id="ragQueryForm" class="search-form">
+                            <div class="search-input-group">
+                                <span class="search-icon" aria-hidden="true">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    </svg>
+                                </span>
+                                <input 
+                                    type="text" 
+                                    id="queryInput" 
+                                    class="search-input-field" 
+                                    placeholder="Enter an official campus inquiry (e.g., What are the hostel mess charges for Fall 2026?)" 
+                                    autocomplete="off"
+                                    required
+                                />
+                                <button type="submit" id="submitBtn" class="primary-action-btn">
+                                    <span>Execute Pipeline</span>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Clean Quick Suggestions -->
+                        <div class="suggestions-container" id="chipsContainer">
+                            <span class="suggestions-caption">Suggested Inquiries:</span>
+                            <div class="suggestions-pills">
+                                <button type="button" class="query-pill" data-query="What are the hostel mess charges and room charges for semester Fall 2026?">
+                                    Hostel Mess Charges
+                                </button>
+                                <button type="button" class="query-pill" data-query="When is the GDGoC SpeedCode hackathon, what is the registration fee, and what are the prizes?">
+                                    SpeedCode Hackathon
+                                </button>
+                                <button type="button" class="query-pill" data-query="What is the minimum attendance required for terminal exams and what is the penalty?">
+                                    80% Attendance Policy
+                                </button>
+                                <button type="button" class="query-pill" data-query="What are the campus bus transport routes, timings, and semester fee?">
+                                    Campus Bus Transport
+                                </button>
+                                <button type="button" class="query-pill" data-query="What is the semester fee payment deadline and where can challans be deposited?">
+                                    Tuition Fee Challans
+                                </button>
+                                <button type="button" class="query-pill" data-query="Who is eligible for campus merit scholarships and what fee waiver is provided?">
+                                    Merit Scholarships
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Dynamic Execution Flow Diagram -->
+                <section class="flow-panel" aria-label="Dynamic Execution Flow">
+                    <div class="panel-header">
+                        <div class="panel-heading">
+                            <span class="panel-tag">Execution Pipeline</span>
+                            <h2 class="panel-title">Dynamic Execution Flow Diagram</h2>
+                            <p class="panel-description">Shows real-time operations, relevance decision gates, and token routing generated directly from execution traces.</p>
+                        </div>
+                        <div class="panel-status-box">
+                            <span id="pipelineStatusTag" class="status-pill status-ready">Ready for execution</span>
+                        </div>
+                    </div>
+
+                    <div class="flow-diagram-container" id="flowDiagramContainer">
+                        <div class="flow-empty-state">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                            </svg>
+                            <p>Submit a query above to generate and inspect the real-time execution flow diagram.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Workspace Columns: Results & Deep Inspection -->
+                <div class="workspace-grid">
+                    <!-- Left Column: Answer & Intelligent Runtime Visualizations -->
+                    <div class="workspace-column-main">
+                        <section class="card-panel" id="answerCard" aria-label="Grounded Answer">
+                            <div class="card-header">
+                                <div class="card-header-title">
+                                    <h3 class="card-title">Grounded Answer</h3>
+                                    <span class="card-caption">Synthesized with verified source attribution</span>
+                                </div>
+                                <div class="card-actions">
+                                    <span id="latencyBadge" class="meta-badge hidden">Latency: 0.0s</span>
+                                    <button type="button" id="copyBtn" class="secondary-icon-btn" title="Copy answer to clipboard">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                        </svg>
+                                        <span>Copy</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div id="welcomePlaceholder" class="empty-display-box">
+                                    <div class="empty-display-icon">
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                            <polyline points="14 2 14 8 20 8"></polyline>
+                                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                                        </svg>
+                                    </div>
+                                    <h4>No Query Executed Yet</h4>
+                                    <p>Type an official question or select a suggestion pill to retrieve handbook evidence and observe verified answers.</p>
+                                </div>
+
+                                <div id="loadingIndicator" class="loading-display-box hidden">
+                                    <div class="loading-ring"></div>
+                                    <div class="loading-content">
+                                        <h4 id="loadingStageTitle">Executing Retrieval Pipeline</h4>
+                                        <p id="loadingStageDetail">Searching 29 indexed chunks and evaluating BM25 relevance scores...</p>
+                                    </div>
+                                </div>
+
+                                <div id="answerContent" class="answer-container hidden">
+                                    <div id="answerText" class="answer-prose"></div>
+                                    <div class="citations-container">
+                                        <h4 class="citations-header">Verified Source Attributions:</h4>
+                                        <div id="citationsList" class="citations-pills-list"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Runtime Visualization Card -->
+                        <section class="card-panel" id="visualizationCard" aria-label="Runtime Visualizations">
+                            <div class="card-header">
+                                <div class="card-header-title">
+                                    <h3 class="card-title">Runtime Execution Visualizations</h3>
+                                    <span class="card-caption" id="visDescription">Dynamically determined and plotted from runtime execution metrics</span>
+                                </div>
+                                <div class="card-actions" id="visActions">
+                                    <div class="tab-pill-group" id="visTypeToggle" style="display: none;">
+                                        <button type="button" class="tab-pill active" data-chart="relevance">Relevance Scores</button>
+                                        <button type="button" class="tab-pill" data-chart="tokens">Token Budget</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div id="visPlaceholder" class="empty-display-box">
+                                    <div class="empty-display-icon">
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                                        </svg>
+                                    </div>
+                                    <h4>Visualization Awaiting Execution</h4>
+                                    <p>Upon execution, the system dynamically plots candidate chunk BM25 scores or token distributions.</p>
+                                </div>
+
+                                <div id="visRenderArea" class="vis-render-area hidden"></div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- Right Column: Evidence & Technique Explanations -->
+                    <div class="workspace-column-side">
+                        <section class="card-panel" id="evidenceCard" aria-label="Retrieved Evidence Chunks">
+                            <div class="card-header">
+                                <div class="card-header-title">
+                                    <h3 class="card-title">Retrieved Evidence</h3>
+                                    <span class="card-caption">Handbook sections exceeding threshold 0.0</span>
+                                </div>
+                                <span id="chunksBadge" class="meta-badge">0 Chunks Selected</span>
+                            </div>
+
+                            <div class="card-body">
+                                <div id="evidencePlaceholder" class="empty-display-box">
+                                    <p>Ranked evidence chunks with BM25 scores will appear here after query execution.</p>
+                                </div>
+                                <div id="evidenceList" class="evidence-cards-container hidden"></div>
+                            </div>
+                        </section>
+
+                        <section class="card-panel" id="techniquesCard" aria-label="Identified Techniques">
+                            <div class="card-header">
+                                <div class="card-header-title">
+                                    <h3 class="card-title">Techniques Identified in Execution</h3>
+                                    <span class="card-caption">Methods verified from actual traces, parameters, and output audits</span>
+                                </div>
+                                <span id="techniqueStatusBadge" class="meta-badge">Audit Ready</span>
+                            </div>
+
+                            <div class="card-body">
+                                <div id="techniquesPlaceholder" class="empty-display-box">
+                                    <p>Techniques and algorithmic strategies utilized during query execution will be classified and explained here.</p>
+                                </div>
+                                <div id="techniquesList" class="techniques-accordion hidden"></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- Session Consultation History & Downloads -->
+                <section class="audit-session-panel" aria-label="Consultation Audit Log">
+                    <div class="audit-header">
+                        <div class="audit-header-title">
+                            <h3 class="audit-title">Consultation Audit Log</h3>
+                            <p class="audit-subtitle">Inquiries and verified responses are maintained in an institutional markdown report for auditing.</p>
+                        </div>
+                        <div class="audit-controls">
+                            <button type="button" id="viewHandbookBtn" class="secondary-action-btn">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                </svg>
+                                <span>View Master Handbook</span>
+                            </button>
+                            <button type="button" id="exportReportBtn" class="secondary-action-btn primary-tint">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                <span>Download Audit Report (.md)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="sessionLog" class="session-log-container">
+                        <div class="empty-log-state">No inquiries executed in this session.</div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Master Handbook Inspection Modal -->
+        <div id="handbookModal" class="modal-wrapper hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <div class="modal-backdrop" id="modalBackdrop"></div>
+            <div class="modal-window">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h3 id="modalTitle" class="modal-title">CUI Wah Student Handbook</h3>
+                        <span class="modal-subtitle">Official Ground Truth Knowledge Base (9 Sections • 29 Chunks)</span>
+                    </div>
+                    <button type="button" id="closeModalBtn" class="modal-close-btn" aria-label="Close dialog">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <pre id="handbookContent" class="handbook-content-pre">Loading handbook...</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Professional Footer -->
+        <footer class="app-footer">
+            <div class="footer-left">
+                <span>COMSATS University Islamabad, Wah Campus</span>
+                <span class="footer-separator">•</span>
+                <span>CampusMind Context Engineering & RAG System</span>
+            </div>
+            <div class="footer-right">
+                <span id="footerKeyStatus">2 Gemini API Keys Active (Auto-Failover Enabled)</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js?v=3.0"></script>
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="COMSATS University Islamabad, Wah Campus - PromptCraft Prompt Engineering Studio & Architecture Inspector.">
+    <title>CUI Wah — PromptCraft Prompt Engineering Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=2.2">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Top Navigation Bar -->
+        <header class="app-navbar">
+            <div class="nav-brand-group">
+                <div class="brand-text">
+                    <span class="brand-institution">COMSATS UNIVERSITY ISLAMABAD • WAH CAMPUS</span>
+                    <h1 class="brand-title">PromptCraft — Prompt Engineering Studio</h1>
+                </div>
+            </div>
+            <div class="nav-metrics-group">
+                <div class="status-indicator">
+                    <span class="status-pulse-dot"></span>
+                    <span class="status-label">Studio Engine Active</span>
+                </div>
+                <div class="corpus-badge">
+                    <span class="badge-count">7 Prompt Techniques • Gemini 3.5</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Workspace -->
+        <main class="main-content">
+            <!-- Technique Selector & Prompt Input Section -->
+            <section class="search-panel" aria-label="Technique Selection and Prompt Input">
+                <div class="section-subheading">
+                    <span class="panel-tag">Step 1</span>
+                    <h2 class="panel-title" style="margin-bottom: 12px;">Choose Prompt Engineering Technique</h2>
+                </div>
+
+                <!-- 7 Prompt Engineering Technique Cards -->
+                <div class="technique-grid" id="techniqueCards">
+                    <div class="technique-card" data-type="1" id="techCard1">
+                        <div class="card-step-badge">1</div>
+                        <div class="card-info">
+                            <h3 class="card-heading">Zero-Shot Prompting</h3>
+                            <p class="card-desc">Direct task instruction with zero demonstrations or pattern priming.</p>
+                        </div>
+                    </div>
+
+                    <div class="technique-card" data-type="2" id="techCard2">
+                        <div class="card-step-badge">2</div>
+                        <div class="card-info">
+                            <h3 class="card-heading">Few-Shot Prompting</h3>
+                            <p class="card-desc">Supplies 2 input-output pairs to guide conciseness, format, and tone.</p>
+                        </div>
+                    </div>
+
+                    <div class="technique-card" data-type="3" id="techCard3">
+                        <div class="card-step-badge">3</div>
+                        <div class="card-info">
+                            <h3 class="card-heading">Chain-of-Thought (CoT)</h3>
+                            <p class="card-desc">Compels explicit step-by-step intermediate reasoning before the answer.</p>
+                        </div>
+                    </div>
+
+                    <div class="technique-card" data-type="4" id="techCard4">
+                        <div class="card-step-badge">4</div>
+                        <div class="card-info">
+                            <h3 class="card-heading">System Persona (Tutor)</h3>
+                            <p class="card-desc">Assigns Dr. Sarah, an encouraging university CS professor persona.</p>
+                        </div>
+                    </div>
+
+                    <div class="technique-card" data-type="5" id="techCard5">
+                        <div class="card-step-badge">5</div>
+                        <div class="card-info">
+                            <h3 class="card-heading">Structured JSON Output</h3>
+                            <p class="card-desc">Enforces typed, schema-compliant, machine-readable JSON structure.</p>
+                        </div>
+                    </div>
+
+                    <div class="technique-card" data-type="6" id="techCard6">
+                        <div class="card-step-badge">6</div>
+                        <div class="card-info">
+                            <h3 class="card-heading">Prompt Auto-Optimizer</h3>
+                            <p class="card-desc">Metacognitive critique and transformation into a high-precision prompt.</p>
+                        </div>
+                    </div>
+
+                    <div class="technique-card active" data-type="7" id="techCard7">
+                        <div class="card-step-badge">7</div>
+                        <div class="card-info">
+                            <h3 class="card-heading">Iterative Prompt Ladder</h3>
+                            <p class="card-desc">Evolves prompt from Weak to Detailed to Production-Constrained.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Prompt Input -->
+                <div class="section-subheading" style="margin-top: 24px;">
+                    <span class="panel-tag">Step 2</span>
+                    <h2 class="panel-title" style="margin-bottom: 12px;">Your Prompt or Task</h2>
+                </div>
+
+                <div class="search-form">
+                    <div class="textarea-wrapper">
+                        <textarea 
+                            id="userPromptInput" 
+                            class="search-textarea" 
+                            rows="3" 
+                            placeholder="Enter your prompt here (e.g., Write an announcement post for GDGoC CUI Wah bootcamp)..."
+                        >Write an announcement post for GDGoC CUI Wah bootcamp</textarea>
+                    </div>
+
+                    <div class="suggestions-container" style="margin-top: 12px; padding-top: 12px;">
+                        <span class="suggestions-caption">Starter Tasks:</span>
+                        <div class="suggestions-pills" id="sampleChips">
+                            <button type="button" class="query-pill active-pill" data-prompt="Write an announcement post for GDGoC CUI Wah bootcamp">Event Announcement</button>
+                            <button type="button" class="query-pill" data-prompt="Explain recursion in Python like I am 12 years old">Recursion Metaphor</button>
+                            <button type="button" class="query-pill" data-prompt="How can I prepare for the upcoming CUI Wah SpeedCode hackathon?">Hackathon Prep</button>
+                            <button type="button" class="query-pill" data-prompt="Write a Python function to compute GPA from student letter grades">GPA Function</button>
+                            <button type="button" class="query-pill" data-prompt="What causes an IndexError in Python and how do I fix it?">IndexError Fix</button>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 16px; display: flex; justify-content: flex-end;">
+                        <button type="button" id="executePromptBtn" class="primary-action-btn">
+                            <span>Execute Prompt Transformation</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Architecture Diagrams Section -->
+            <section class="ladder-panel" id="architectureDiagramSection" aria-label="Architecture Diagrams">
+                <div class="panel-header">
+                    <div class="panel-heading">
+                        <span class="panel-tag">Architecture Diagram</span>
+                        <h2 class="panel-title" id="diagramHeaderTitle">Topic 07: Iterative Prompt Improvement Ladder</h2>
+                        <p class="panel-description" id="diagramHeaderSubtitle">GDGoC CUI Wah — Hands-on AI Architecture Diagram</p>
+                    </div>
+                    <div class="panel-status-box">
+                        <div class="tab-pill-group" id="diagramViewToggle">
+                            <button type="button" class="tab-pill active" data-view="diagram">Topic Architecture Diagram</button>
+                            <button type="button" class="tab-pill" data-view="pipeline">Pipeline Trace</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic Diagram Selector Tabs -->
+                <div class="topic-diagram-pills-bar" id="topicDiagramPills">
+                    <button type="button" class="topic-diagram-pill active" data-topic="7" data-svg="diagrams/topic_07_prompt_improvement.svg" data-title="Topic 07: Iterative Prompt Improvement Ladder" data-subtitle="GDGoC CUI Wah — Hands-on AI Architecture Diagram">Topic 07: Improvement Ladder</button>
+                    <button type="button" class="topic-diagram-pill" data-topic="1" data-svg="diagrams/topic_03_zero_vs_few_shot.svg" data-title="Topic 03: Zero-Shot vs Few-Shot Prompting" data-subtitle="GDGoC CUI Wah — Hands-on AI Architecture Diagram">Topic 03: Zero vs Few-Shot</button>
+                    <button type="button" class="topic-diagram-pill" data-topic="3" data-svg="diagrams/topic_04_decomposition.svg" data-title="Topic 04: Task Decomposition Pipeline" data-subtitle="GDGoC CUI Wah — Hands-on AI Architecture Diagram">Topic 04: Chain-of-Thought</button>
+                    <button type="button" class="topic-diagram-pill" data-topic="4" data-svg="diagrams/topic_05_system_vs_user.svg" data-title="Topic 05: System Instructions vs User Prompts" data-subtitle="GDGoC CUI Wah — Hands-on AI Architecture Diagram">Topic 05: System Persona</button>
+                    <button type="button" class="topic-diagram-pill" data-topic="5" data-svg="diagrams/topic_06_structured_output.svg" data-title="Topic 06: Structured Output &amp; JSON Formatting" data-subtitle="GDGoC CUI Wah — Hands-on AI Architecture Diagram">Topic 06: Structured JSON</button>
+                    <button type="button" class="topic-diagram-pill" data-topic="6" data-svg="diagrams/topic_02_anatomy.svg" data-title="Topic 02: Anatomy of an Effective Prompt" data-subtitle="GDGoC CUI Wah — Hands-on AI Architecture Diagram">Topic 02: Prompt Anatomy</button>
+                    <button type="button" class="topic-diagram-pill" data-topic="flow" data-svg="diagrams/topic_01_prompt_flow.svg" data-title="Topic 01: What is a Prompt? (Vague vs Specific)" data-subtitle="GDGoC CUI Wah — Hands-on AI Architecture Diagram">Topic 01: Prompt Flow</button>
+                    <button type="button" class="topic-diagram-pill" data-topic="8" data-svg="diagrams/topic_08_prompt_safety.svg" data-title="Topic 08: Prompt Safety &amp; Defense" data-subtitle="GDGoC CUI Wah — Hands-on AI Architecture Diagram">Topic 08: Safety &amp; Defense</button>
+                </div>
+
+                <!-- View 1: Authentic Architecture Diagram Display (Matching Topic 07 SVG exactly) -->
+                <div class="diagram-canvas-track" id="diagramViewTrack">
+                    <div class="diagram-canvas-card">
+                        <img id="topicDiagramImg" src="diagrams/topic_07_prompt_improvement.svg" alt="Topic 07: Iterative Prompt Improvement Ladder" class="topic-diagram-svg" />
+                    </div>
+                </div>
+
+                <!-- View 2: Dynamic Execution Pipeline Flow Container -->
+                <div class="flow-diagram-container hidden" id="pipelineViewTrack">
+                    <div class="flow-empty-state">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                        </svg>
+                        <p>Select a technique and click Execute Prompt Transformation to trace the live prompt engineering pipeline.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2-Column Responsive Results Grid -->
+            <div class="workspace-grid">
+                <!-- Left Column: AI Model Response & Runtime Visualizations -->
+                <div class="workspace-column-main">
+                    <!-- Model Output Card -->
+                    <section class="card-panel" id="responseCard" aria-label="Model Response">
+                        <div class="card-header">
+                            <div class="card-header-title">
+                                <h3 class="card-title">Model Response</h3>
+                                <span class="card-caption" id="responseCaption">Awaiting prompt transformation</span>
+                            </div>
+                            <div class="card-actions">
+                                <span id="latencyBadge" class="meta-badge hidden">Latency: 0.0s</span>
+                                <button id="copyBtn" class="secondary-icon-btn" title="Copy response to clipboard">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    <span>Copy</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div id="welcomePlaceholder" class="empty-display-box">
+                                <div class="empty-display-icon">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    </svg>
+                                </div>
+                                <h4>No Prompt Executed Yet</h4>
+                                <p>Select any technique above, type or choose a starter task, and execute the transformation to inspect model output.</p>
+                            </div>
+
+                            <div id="loadingIndicator" class="loading-display-box hidden">
+                                <div class="loading-ring"></div>
+                                <div class="loading-content">
+                                    <h4 id="loadingStageTitle">Applying Prompt Technique</h4>
+                                    <p id="loadingStageDetail">Generating inference response with Google Gemini...</p>
+                                </div>
+                            </div>
+
+                            <div id="responseContent" class="answer-container hidden">
+                                <div id="responseText" class="answer-prose"></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Runtime Visualization Card -->
+                    <section class="card-panel" id="visualizationCard" aria-label="Runtime Visualizations">
+                        <div class="card-header">
+                            <div class="card-header-title">
+                                <h3 class="card-title">Runtime Architecture Visualizations</h3>
+                                <span class="card-caption" id="visDescription">Token expansion and context window budget metrics</span>
+                            </div>
+                            <div class="card-actions" id="visActions">
+                                <div class="tab-pill-group" id="visTypeToggle" style="display: none;">
+                                    <button type="button" class="tab-pill active" data-chart="expansion">Token Expansion</button>
+                                    <button type="button" class="tab-pill" data-chart="distribution">Context Distribution</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div id="visPlaceholder" class="empty-display-box">
+                                <div class="empty-display-icon">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                                    </svg>
+                                </div>
+                                <h4>Visualization Awaiting Execution</h4>
+                                <p>Shows actual token counts, framing multipliers, and context allocations computed during prompt transformation.</p>
+                            </div>
+
+                            <div id="visRenderArea" class="vis-render-area hidden"></div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Right Column: Engineered Prompt & Technique Audits -->
+                <div class="workspace-column-side">
+                    <!-- Transformed Engineered Prompt Card -->
+                    <section class="card-panel" id="promptInspectionCard" aria-label="Engineered Prompt Architecture">
+                        <div class="card-header">
+                            <div class="card-header-title">
+                                <h3 class="card-title">Engineered Prompt Payload</h3>
+                                <span class="card-caption">Exact payload delivered to model context window</span>
+                            </div>
+                            <span id="multiplierBadge" class="meta-badge">1.0x Baseline</span>
+                        </div>
+
+                        <div class="card-body">
+                            <div id="promptPlaceholder" class="empty-display-box">
+                                <p>The transformed prompt with system instructions and framing rules will appear here.</p>
+                            </div>
+
+                            <div id="promptDetailsArea" class="hidden" style="display:flex; flex-direction:column; gap:12px;">
+                                <div id="systemInstSection" class="hidden">
+                                    <span style="font-size:11px; font-weight:700; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:0.05em;">System Instruction</span>
+                                    <pre id="systemInstText" style="margin-top:4px; font-family:var(--font-mono); font-size:12px; background:var(--color-surface-subtle); padding:10px; border-radius:6px; border:1px solid var(--color-border-subtle); white-space:pre-wrap;"></pre>
+                                </div>
+
+                                <div>
+                                    <span style="font-size:11px; font-weight:700; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:0.05em;">Engineered User Prompt Payload</span>
+                                    <pre id="engineeredPromptText" style="margin-top:4px; font-family:var(--font-mono); font-size:12px; background:var(--color-surface-subtle); padding:10px; border-radius:6px; border:1px solid var(--color-border-subtle); white-space:pre-wrap; max-height:280px; overflow-y:auto;"></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Automatic Technique Identification & Explanation -->
+                    <section class="card-panel" id="techniquesCard" aria-label="Identified Techniques">
+                        <div class="card-header">
+                            <div class="card-header-title">
+                                <h3 class="card-title">Techniques Identified in Execution</h3>
+                                <span class="card-caption">Verified from actual runtime traces and token payloads</span>
+                            </div>
+                            <span id="techniqueStatusBadge" class="meta-badge">Audit Ready</span>
+                        </div>
+
+                        <div class="card-body">
+                            <div id="techniquesPlaceholder" class="empty-display-box">
+                                <p>Algorithmic strategy, prompt structure, and token budgets will be explained here.</p>
+                            </div>
+
+                            <div id="techniquesList" class="techniques-accordion hidden"></div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Experiment Notes Audit History & Downloads -->
+            <section class="audit-session-panel" aria-label="Experiment Notes Audit">
+                <div class="audit-header">
+                    <div class="audit-header-title">
+                        <h3 class="audit-title">PromptCraft Experiment Notes</h3>
+                        <p class="audit-subtitle">Session experiments are recorded into an official markdown audit document for your laboratory notes.</p>
+                    </div>
+                    <div class="audit-controls">
+                        <button type="button" id="exportNotesBtn" class="secondary-action-btn primary-tint">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            <span>Download Experiment Notes (.md)</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="sessionLog" class="session-log-container">
+                    <div class="empty-log-state">No experiments recorded in this session yet.</div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Professional Footer -->
+        <footer class="app-footer">
+            <div class="footer-left">
+                <span>COMSATS University Islamabad, Wah Campus</span>
+                <span class="footer-separator">•</span>
+                <span>Day 1 PromptCraft Prompt Engineering Studio</span>
+            </div>
+            <div class="footer-right">
+                <span>Deterministic Low-Temperature Inference (temp=0.2)</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js?v=2.2"></script>
+</body>
+</html>

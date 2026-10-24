@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 250" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #1a1a2e; }
+      .subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #555; }
+      .box-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+      .box-sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #f0f0f0; text-anchor: middle; }
+      .box-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #333333; }
+      .arrow { stroke: #4285F4; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead); }
+      .arrow-red { stroke: #EA4335; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead-red); }
+      .arrow-green { stroke: #34A853; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead-green); }
+      .tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #4285F4; }
+    </style>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#4285F4" />
+    </marker>
+    <marker id="arrowhead-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#EA4335" />
+    </marker>
+    <marker id="arrowhead-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#34A853" />
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="820" height="250" fill="#f8fafc" rx="12" />
+  <rect x="2" y="2" width="816" height="246" fill="none" stroke="#e2e8f0" stroke-width="2" rx="10" />
+
+  <!-- Title Header -->
+  <text x="30" y="42" class="title">Topic 09: Context Efficiency & Application Caching</text>
+  <text x="30" y="62" class="subtitle">GDGoC CUI Wah — Hands-on AI Architecture Diagram</text>
+
+  <!-- Diagram Content -->
+  
+    <!-- Request -->
+    <rect x="40" y="100" width="160" height="65" rx="8" fill="#4285F4" filter="url(#shadow)"/>
+    <text x="120" y="130" class="box-label">Student Request</text>
+    <text x="120" y="150" class="box-sub">Identical query</text>
+
+    <path d="M 200 132 L 280 132" class="arrow"/>
+
+    <!-- Cache Lookup -->
+    <rect x="290" y="95" width="170" height="75" rx="8" fill="#1E293B" filter="url(#shadow)"/>
+    <text x="375" y="125" class="box-label">Cache Lookup</text>
+    <text x="375" y="145" class="box-sub">key in CACHE_STORE?</text>
+
+    <!-- Branch Hit -->
+    <path d="M 460 115 L 560 90" class="arrow-green"/>
+    <rect x="570" y="60" width="220" height="60" rx="8" fill="#fff" stroke="#34A853" stroke-width="2"/>
+    <text x="585" y="85" class="box-text" font-weight="bold" fill="#34A853">&#x2713; CACHE HIT (0 ms)</text>
+    <text x="585" y="105" class="box-text">Returns saved response instantly</text>
+
+    <!-- Branch Miss -->
+    <path d="M 460 150 L 560 175" class="arrow-red"/>
+    <rect x="570" y="150" width="220" height="70" rx="8" fill="#fff" stroke="#EA4335" stroke-width="2"/>
+    <text x="585" y="175" class="box-text" font-weight="bold" fill="#EA4335">&#x2717; CACHE MISS (1.2 s)</text>
+    <text x="585" y="195" class="box-text">Calls Gemini API &amp; saves result</text>
+    
+</svg>

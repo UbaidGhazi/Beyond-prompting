@@ -1,0 +1,13 @@
+# Google Official GenAI SDK
+google-genai>=1.0.0
+
+# Environment Variable Management
+python-dotenv>=1.0.1
+
+# Interactive Notebooks
+jupyter>=1.0.0
+notebook>=7.0.0
+ipykernel>=6.29.0
+
+# Terminal formatting & beginner-friendly visual output
+colorama>=0.4.6

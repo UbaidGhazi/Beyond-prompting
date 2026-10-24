@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 930 300" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #1a1a2e; }
+      .subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #555; }
+      .box-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+      .box-sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #f0f0f0; text-anchor: middle; }
+      .box-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #333333; }
+      .arrow { stroke: #4285F4; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead); }
+      .arrow-red { stroke: #EA4335; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead-red); }
+      .arrow-green { stroke: #34A853; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead-green); }
+      .tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #4285F4; }
+    </style>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#4285F4" />
+    </marker>
+    <marker id="arrowhead-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#EA4335" />
+    </marker>
+    <marker id="arrowhead-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#34A853" />
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="930" height="300" fill="#f8fafc" rx="12" />
+  <rect x="2" y="2" width="926" height="296" fill="none" stroke="#e2e8f0" stroke-width="2" rx="10" />
+
+  <!-- Title Header -->
+  <text x="30" y="42" class="title">Topic 06: Conversation History, Memory, and State</text>
+  <text x="30" y="62" class="subtitle">GDGoC CUI Wah — Hands-on AI Architecture Diagram</text>
+
+  <!-- Diagram Content -->
+  
+    <!-- Turn 1 -->
+    <rect x="40" y="90" width="220" height="65" rx="8" fill="#4285F4" filter="url(#shadow)"/>
+    <text x="150" y="118" class="box-label">Turn 1: User Input</text>
+    <text x="150" y="138" class="box-sub">"I am Ali, 1st sem SE student"</text>
+
+    <path d="M 260 122 L 340 122" class="arrow"/>
+
+    <!-- App State -->
+    <rect x="350" y="90" width="240" height="65" rx="8" fill="#1E293B" filter="url(#shadow)"/>
+    <text x="470" y="118" class="box-label">Application State (Python)</text>
+    <text x="470" y="138" class="box-sub">state["name"] = "Ali", state["sem"] = 1</text>
+
+    <!-- Turn 2 -->
+    <rect x="40" y="190" width="220" height="65" rx="8" fill="#4285F4" filter="url(#shadow)"/>
+    <text x="150" y="218" class="box-label">Turn 2: User Input</text>
+    <text x="150" y="238" class="box-sub">"What workshop fits me?"</text>
+
+    <path d="M 260 222 L 340 222" class="arrow"/>
+    <path d="M 470 155 L 470 200" class="arrow-green"/>
+
+    <!-- Combined Context -->
+    <rect x="350" y="200" width="240" height="65" rx="8" fill="#34A853" filter="url(#shadow)"/>
+    <text x="470" y="225" class="box-label">Augmented Prompt</text>
+    <text x="470" y="245" class="box-sub">Question + Stored Student Profile</text>
+
+    <path d="M 590 232 L 670 232" class="arrow-green"/>
+
+    <!-- Output -->
+    <rect x="680" y="180" width="220" height="90" rx="8" fill="#fff" stroke="#34A853" stroke-width="2"/>
+    <text x="695" y="210" class="box-text" font-weight="bold" fill="#34A853">Personalized Response</text>
+    <text x="695" y="230" class="box-text">"Hi Ali! Since you're in 1st sem,</text>
+    <text x="695" y="250" class="box-text">take Python for Beginners!"</text>
+    
+</svg>

@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 270" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #1a1a2e; }
+      .subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #555; }
+      .box-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+      .box-sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #f0f0f0; text-anchor: middle; }
+      .box-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #333333; }
+      .arrow { stroke: #4285F4; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead); }
+      .arrow-red { stroke: #EA4335; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead-red); }
+      .arrow-green { stroke: #34A853; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead-green); }
+      .tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #4285F4; }
+    </style>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#4285F4" />
+    </marker>
+    <marker id="arrowhead-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#EA4335" />
+    </marker>
+    <marker id="arrowhead-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#34A853" />
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="980" height="270" fill="#f8fafc" rx="12" />
+  <rect x="2" y="2" width="976" height="266" fill="none" stroke="#e2e8f0" stroke-width="2" rx="10" />
+
+  <!-- Title Header -->
+  <text x="30" y="42" class="title">Topic 07: Mini-RAG & Grounded Generation</text>
+  <text x="30" y="62" class="subtitle">GDGoC CUI Wah — Hands-on AI Architecture Diagram</text>
+
+  <!-- Diagram Content -->
+  
+    <!-- Question -->
+    <rect x="40" y="90" width="160" height="60" rx="8" fill="#4285F4" filter="url(#shadow)"/>
+    <text x="120" y="118" class="box-label">Student Question</text>
+    <text x="120" y="136" class="box-sub">"When is Git session?"</text>
+
+    <path d="M 200 120 L 260 120" class="arrow"/>
+
+    <!-- Keyword Matcher -->
+    <rect x="270" y="90" width="170" height="60" rx="8" fill="#FBBC05" filter="url(#shadow)"/>
+    <text x="355" y="118" class="box-label" fill="#1a1a2e">Keyword Matcher</text>
+    <text x="355" y="136" class="box-sub" fill="#1a1a2e">Finds EVT-004 (Git)</text>
+
+    <!-- Database link -->
+    <path d="M 355 150 L 355 200" stroke="#FBBC05" stroke-width="2" stroke-dasharray="4"/>
+    <rect x="270" y="200" width="170" height="50" rx="6" fill="#fff" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="355" y="230" class="box-text" text-anchor="middle">campus_events.json</text>
+
+    <path d="M 440 120 L 500 120" class="arrow"/>
+
+    <!-- Gemini with Grounding -->
+    <rect x="510" y="80" width="180" height="80" rx="8" fill="#1E293B" filter="url(#shadow)"/>
+    <text x="600" y="115" class="box-label">Gemini API</text>
+    <text x="600" y="135" class="box-sub">Strict Grounding Rule</text>
+    <text x="600" y="150" class="box-sub">Refuse if missing!</text>
+
+    <path d="M 690 120 L 750 120" class="arrow-green"/>
+
+    <!-- Grounded Answer -->
+    <rect x="760" y="80" width="200" height="80" rx="8" fill="#fff" stroke="#34A853" stroke-width="2"/>
+    <text x="775" y="110" class="box-text" font-weight="bold" fill="#34A853">Grounded Answer</text>
+    <text x="775" y="130" class="box-text">"Nov 27, 2 PM at Lab 5."</text>
+    <text x="775" y="148" class="box-text" fill="#666">(No hallucinations!)</text>
+    
+</svg>

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 310" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #1a1a2e; }
+      .subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #555; }
+      .box-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+      .box-sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #f0f0f0; text-anchor: middle; }
+      .box-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #333333; }
+      .arrow { stroke: #4285F4; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead); }
+      .arrow-red { stroke: #EA4335; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead-red); }
+      .arrow-green { stroke: #34A853; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead-green); }
+      .tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #4285F4; }
+    </style>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#4285F4" />
+    </marker>
+    <marker id="arrowhead-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#EA4335" />
+    </marker>
+    <marker id="arrowhead-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#34A853" />
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="700" height="310" fill="#f8fafc" rx="12" />
+  <rect x="2" y="2" width="696" height="306" fill="none" stroke="#e2e8f0" stroke-width="2" rx="10" />
+
+  <!-- Title Header -->
+  <text x="30" y="42" class="title">Topic 03: Context Window & Token Limits</text>
+  <text x="30" y="62" class="subtitle">GDGoC CUI Wah — Hands-on AI Architecture Diagram</text>
+
+  <!-- Diagram Content -->
+  
+    <!-- Context Window Bar -->
+    <rect x="50" y="110" width="600" height="60" rx="8" fill="#e2e8f0"/>
+    
+    <!-- Input tokens -->
+    <rect x="50" y="110" width="340" height="60" rx="8" fill="#4285F4"/>
+    <text x="220" y="145" class="box-label">Input Context + Instructions (Prompt)</text>
+
+    <!-- Output budget -->
+    <rect x="390" y="110" width="160" height="60" rx="8" fill="#34A853"/>
+    <text x="470" y="145" class="box-label">Output Budget</text>
+
+    <!-- Remaining capacity -->
+    <text x="590" y="145" class="box-text" fill="#666">Buffer</text>
+
+    <!-- Explanatory Cards -->
+    <rect x="50" y="200" width="240" height="80" rx="8" fill="#fff" stroke="#4285F4" stroke-width="2"/>
+    <text x="65" y="225" class="box-text" font-weight="bold" fill="#4285F4">Token Math Rule of Thumb</text>
+    <text x="65" y="245" class="box-text">1 Token &#x2248; 4 English characters</text>
+    <text x="65" y="265" class="box-text">100 words &#x2248; 130 tokens</text>
+
+    <rect x="330" y="200" width="240" height="80" rx="8" fill="#fff" stroke="#EA4335" stroke-width="2"/>
+    <text x="345" y="225" class="box-text" font-weight="bold" fill="#EA4335">Overflow Danger</text>
+    <text x="345" y="245" class="box-text">Too much noisy context degrades</text>
+    <text x="345" y="265" class="box-text">attention &amp; wastes quota budget.</text>
+    
+</svg>

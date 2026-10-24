@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 360" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #1a1a2e; }
+      .subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #555; }
+      .box-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+      .box-sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #f0f0f0; text-anchor: middle; }
+      .box-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #333333; }
+      .arrow { stroke: #4285F4; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead); }
+      .arrow-red { stroke: #EA4335; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead-red); }
+      .arrow-green { stroke: #34A853; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead-green); }
+      .tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #4285F4; }
+    </style>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#4285F4" />
+    </marker>
+    <marker id="arrowhead-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#EA4335" />
+    </marker>
+    <marker id="arrowhead-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#34A853" />
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="620" height="360" fill="#f8fafc" rx="12" />
+  <rect x="2" y="2" width="616" height="356" fill="none" stroke="#e2e8f0" stroke-width="2" rx="10" />
+
+  <!-- Title Header -->
+  <text x="30" y="42" class="title">Topic 07: Iterative Prompt Improvement Ladder</text>
+  <text x="30" y="62" class="subtitle">GDGoC CUI Wah — Hands-on AI Architecture Diagram</text>
+
+  <!-- Diagram Content -->
+  
+    <!-- Level 1 -->
+    <rect x="50" y="95" width="210" height="65" rx="8" fill="#EA4335" filter="url(#shadow)"/>
+    <text x="155" y="125" class="box-label">Level 1: Weak</text>
+    <text x="155" y="143" class="box-sub">"Write a post for GDGoC"</text>
+
+    <path d="M 260 127 L 340 127" class="arrow-red"/>
+    <rect x="350" y="95" width="230" height="65" rx="8" fill="#fff" stroke="#EA4335" stroke-width="1.5"/>
+    <text x="365" y="123" class="box-text" fill="#EA4335">Vague, hallucinated dates &amp; venue</text>
+
+    <!-- Level 2 -->
+    <rect x="50" y="180" width="210" height="65" rx="8" fill="#FBBC05" filter="url(#shadow)"/>
+    <text x="155" y="210" class="box-label" fill="#1a1a2e">Level 2: Improved</text>
+    <text x="155" y="228" class="box-sub" fill="#1a1a2e">+ Topic, Date, Lab 3, Time</text>
+
+    <path d="M 260 212 L 340 212" class="arrow"/>
+    <rect x="350" y="180" width="230" height="65" rx="8" fill="#fff" stroke="#FBBC05" stroke-width="1.5"/>
+    <text x="365" y="208" class="box-text" fill="#333">Accurate facts, but uncontrolled length</text>
+
+    <!-- Level 3 -->
+    <rect x="50" y="265" width="210" height="65" rx="8" fill="#34A853" filter="url(#shadow)"/>
+    <text x="155" y="295" class="box-label">Level 3: Constrained</text>
+    <text x="155" y="313" class="box-sub">+ Tone, Max 120 words, 3 bullets</text>
+
+    <path d="M 260 297 L 340 297" class="arrow-green"/>
+    <rect x="350" y="265" width="230" height="65" rx="8" fill="#fff" stroke="#34A853" stroke-width="2"/>
+    <text x="365" y="293" class="box-text" font-weight="bold" fill="#34A853">Production Ready Announcement</text>
+    <text x="365" y="313" class="box-text">Concise, formatted, ready to publish</text>
+    
+</svg>

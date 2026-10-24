@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 230" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #1a1a2e; }
+      .subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #555; }
+      .box-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+      .box-sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #f0f0f0; text-anchor: middle; }
+      .box-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #333333; }
+      .arrow { stroke: #4285F4; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead); }
+      .arrow-red { stroke: #EA4335; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead-red); }
+      .arrow-green { stroke: #34A853; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead-green); }
+      .tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #4285F4; }
+    </style>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#4285F4" />
+    </marker>
+    <marker id="arrowhead-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#EA4335" />
+    </marker>
+    <marker id="arrowhead-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#34A853" />
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="960" height="230" fill="#f8fafc" rx="12" />
+  <rect x="2" y="2" width="956" height="226" fill="none" stroke="#e2e8f0" stroke-width="2" rx="10" />
+
+  <!-- Title Header -->
+  <text x="30" y="42" class="title">Topic 05: Context Compression & Summarization</text>
+  <text x="30" y="62" class="subtitle">GDGoC CUI Wah — Hands-on AI Architecture Diagram</text>
+
+  <!-- Diagram Content -->
+  
+    <!-- Long Document -->
+    <rect x="40" y="90" width="180" height="100" rx="8" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+    <text x="55" y="115" class="box-text" font-weight="bold">Long Document</text>
+    <text x="55" y="135" class="box-text">3-page detailed CUI</text>
+    <text x="55" y="155" class="box-text">Wah lab regulations</text>
+    <text x="55" y="175" class="box-text">(1,500 words)</text>
+
+    <path d="M 220 140 L 290 140" class="arrow"/>
+
+    <!-- Compression Call -->
+    <rect x="300" y="100" width="160" height="80" rx="8" fill="#673AB7" filter="url(#shadow)"/>
+    <text x="380" y="135" class="box-label">Call 1: Summarize</text>
+    <text x="380" y="155" class="box-sub">Extract key rules</text>
+
+    <path d="M 460 140 L 530 140" class="arrow"/>
+
+    <!-- Compact Context -->
+    <rect x="540" y="100" width="160" height="80" rx="8" fill="#34A853" filter="url(#shadow)"/>
+    <text x="620" y="135" class="box-label">Compact Context</text>
+    <text x="620" y="155" class="box-sub">3 Bullet Points (80 words)</text>
+
+    <path d="M 700 140 L 760 140" class="arrow-green"/>
+
+    <!-- Fast QA Call -->
+    <rect x="770" y="90" width="160" height="100" rx="8" fill="#4285F4" filter="url(#shadow)"/>
+    <text x="850" y="125" class="box-label">Call 2: Answer QA</text>
+    <text x="850" y="145" class="box-sub">Student query answered</text>
+    <text x="850" y="165" class="box-sub">at 90% lower token cost!</text>
+    
+</svg>

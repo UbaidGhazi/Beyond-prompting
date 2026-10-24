@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 240" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #1a1a2e; }
+      .subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #555; }
+      .box-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+      .box-sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #f0f0f0; text-anchor: middle; }
+      .box-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #333333; }
+      .arrow { stroke: #4285F4; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead); }
+      .arrow-red { stroke: #EA4335; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead-red); }
+      .arrow-green { stroke: #34A853; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead-green); }
+      .tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #4285F4; }
+    </style>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#4285F4" />
+    </marker>
+    <marker id="arrowhead-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#EA4335" />
+    </marker>
+    <marker id="arrowhead-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#34A853" />
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="940" height="240" fill="#f8fafc" rx="12" />
+  <rect x="2" y="2" width="936" height="236" fill="none" stroke="#e2e8f0" stroke-width="2" rx="10" />
+
+  <!-- Title Header -->
+  <text x="30" y="42" class="title">Topic 06: Structured Output (JSON Generation & Validation)</text>
+  <text x="30" y="62" class="subtitle">GDGoC CUI Wah — Hands-on AI Architecture Diagram</text>
+
+  <!-- Diagram Content -->
+  
+    <!-- Request -->
+    <rect x="40" y="100" width="180" height="70" rx="8" fill="#4285F4" filter="url(#shadow)"/>
+    <text x="130" y="130" class="box-label">Structured Request</text>
+    <text x="130" y="150" class="box-sub">JSON MIME Type specified</text>
+
+    <path d="M 220 135 L 290 135" class="arrow"/>
+
+    <!-- Model -->
+    <rect x="300" y="100" width="140" height="70" rx="8" fill="#1E293B" filter="url(#shadow)"/>
+    <text x="370" y="130" class="box-label">Gemini API</text>
+    <text x="370" y="150" class="box-sub">JSON Output Mode</text>
+
+    <path d="M 440 135 L 510 135" class="arrow"/>
+
+    <!-- Raw String -->
+    <rect x="520" y="90" width="150" height="90" rx="8" fill="#FBBC05" filter="url(#shadow)"/>
+    <text x="595" y="125" class="box-label" fill="#1a1a2e">Raw JSON Text</text>
+    <text x="595" y="145" class="box-sub" fill="#1a1a2e">{"title": "Git"}</text>
+    <text x="595" y="163" class="box-sub" fill="#1a1a2e">String format</text>
+
+    <path d="M 670 135 L 720 135" class="arrow"/>
+
+    <!-- Python Parser -->
+    <rect x="730" y="80" width="180" height="110" rx="8" fill="#fff" stroke="#34A853" stroke-width="2" filter="url(#shadow)"/>
+    <text x="745" y="110" class="box-text" font-weight="bold" fill="#34A853">Python json.loads()</text>
+    <text x="745" y="135" class="box-text">Validates keys:</text>
+    <text x="745" y="155" class="box-text">&#x2713; title &#x2713; venue</text>
+    <text x="745" y="175" class="box-text">Native Python dict</text>
+    
+</svg>

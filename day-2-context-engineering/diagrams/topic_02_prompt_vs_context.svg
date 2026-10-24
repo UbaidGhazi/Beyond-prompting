@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 340" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #1a1a2e; }
+      .subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #555; }
+      .box-label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+      .box-sub { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #f0f0f0; text-anchor: middle; }
+      .box-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #333333; }
+      .arrow { stroke: #4285F4; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead); }
+      .arrow-red { stroke: #EA4335; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead-red); }
+      .arrow-green { stroke: #34A853; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead-green); }
+      .tag { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #4285F4; }
+    </style>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#4285F4" />
+    </marker>
+    <marker id="arrowhead-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#EA4335" />
+    </marker>
+    <marker id="arrowhead-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#34A853" />
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="860" height="340" fill="#f8fafc" rx="12" />
+  <rect x="2" y="2" width="856" height="336" fill="none" stroke="#e2e8f0" stroke-width="2" rx="10" />
+
+  <!-- Title Header -->
+  <text x="30" y="42" class="title">Topic 02: Prompt vs Context (Holding Question Constant)</text>
+  <text x="30" y="62" class="subtitle">GDGoC CUI Wah — Hands-on AI Architecture Diagram</text>
+
+  <!-- Diagram Content -->
+  
+    <!-- Constant Prompt -->
+    <rect x="50" y="160" width="180" height="80" rx="8" fill="#1E293B" filter="url(#shadow)"/>
+    <text x="140" y="195" class="box-label">Constant Question</text>
+    <text x="140" y="215" class="box-sub">"When is the hackathon?"</text>
+
+    <path d="M 230 180 L 310 130" class="arrow"/>
+    <path d="M 230 220 L 310 270" class="arrow"/>
+
+    <!-- Context A -->
+    <rect x="320" y="90" width="200" height="70" rx="8" fill="#4285F4" filter="url(#shadow)"/>
+    <text x="420" y="120" class="box-label">Context A</text>
+    <text x="420" y="140" class="box-sub">SpeedCode: Nov 20, 2026</text>
+
+    <path d="M 520 125 L 590 125" class="arrow"/>
+    <rect x="600" y="90" width="220" height="70" rx="8" fill="#fff" stroke="#4285F4" stroke-width="2"/>
+    <text x="615" y="120" class="box-text" font-weight="bold" fill="#4285F4">Response A</text>
+    <text x="615" y="140" class="box-text">"Hackathon is on Nov 20."</text>
+
+    <!-- Context B -->
+    <rect x="320" y="235" width="200" height="70" rx="8" fill="#FBBC05" filter="url(#shadow)"/>
+    <text x="420" y="265" class="box-label" fill="#1a1a2e">Context B</text>
+    <text x="420" y="285" class="box-sub" fill="#1a1a2e">Spring Hack: Dec 15, 2026</text>
+
+    <path d="M 520 270 L 590 270" class="arrow"/>
+    <rect x="600" y="235" width="220" height="70" rx="8" fill="#fff" stroke="#FBBC05" stroke-width="2"/>
+    <text x="615" y="265" class="box-text" font-weight="bold" fill="#B45309">Response B</text>
+    <text x="615" y="285" class="box-text">"Hackathon is on Dec 15."</text>
+    
+</svg>

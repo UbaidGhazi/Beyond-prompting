@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PromptCraft Studio</title>
+<meta name="description" content="Interactive Prompt Engineering Studio for GDGoC CUI Wah Bootcamp."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0e1a;--surface:#111827;--card:#1a2235;--border:#1e3a5f;--accent:#3b82f6;--accent2:#8b5cf6;--cyan:#06b6d4;--text:#e2e8f0;--muted:#64748b;--radius:14px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(59,130,246,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.04) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+header{position:relative;z-index:10;background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(139,92,246,.12));border-bottom:1px solid var(--border);backdrop-filter:blur(20px);padding:18px 32px;display:flex;align-items:center;gap:16px}
+.logo{font-size:28px}
+.hdr h1{font-size:1.4rem;font-weight:700;background:linear-gradient(90deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hdr p{font-size:.8rem;color:var(--muted);margin-top:2px}
+.badge{margin-left:auto;background:linear-gradient(135deg,#1d4ed8,#7c3aed);padding:6px 14px;border-radius:20px;font-size:.75rem;font-weight:600}
+main{position:relative;z-index:1;display:grid;grid-template-columns:310px 1fr;flex:1;height:calc(100vh - 75px)}
+.sidebar{background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:18px 12px;display:flex;flex-direction:column;gap:7px}
+.sidebar h2{font-size:.68rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;padding:0 4px}
+.tc{background:var(--card);border:1.5px solid transparent;border-radius:var(--radius);padding:12px 13px;cursor:pointer;transition:all .22s}
+.tc:hover{border-color:var(--accent);transform:translateX(3px)}
+.tc.active{border-color:var(--accent);background:linear-gradient(135deg,rgba(59,130,246,.17),rgba(139,92,246,.11))}
+.tc-h{display:flex;align-items:center;gap:9px}
+.tc-n{width:23px;height:23px;border-radius:7px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0}
+.tc-name{font-size:.84rem;font-weight:600}
+.tc-desc{font-size:.71rem;color:var(--muted);margin-top:5px;line-height:1.5}
+.chat-area{display:flex;flex-direction:column;overflow:hidden}
+.msgs{flex:1;overflow-y:auto;padding:22px 26px;display:flex;flex-direction:column;gap:16px;scroll-behavior:smooth}
+.msgs::-webkit-scrollbar{width:5px}.msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.message{display:flex;gap:11px;animation:fu .33s ease}
+@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.message.user{flex-direction:row-reverse}
+.av{width:33px;height:33px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.message.user .av{background:linear-gradient(135deg,#1d4ed8,#7c3aed)}
+.message.bot .av{background:linear-gradient(135deg,#0891b2,#0d9488)}
+.message.pipe .av{background:linear-gradient(135deg,#d97706,#dc2626)}
+.mb{max-width:73%}
+.mm{font-size:.67rem;color:var(--muted);margin-bottom:3px}
+.message.user .mm{text-align:right}
+.bbl{padding:12px 15px;border-radius:12px;font-size:.87rem;line-height:1.7;word-break:break-word}
+.message.user .bbl{background:linear-gradient(135deg,#1d4ed8,#6d28d9);border-bottom-right-radius:3px}
+.message.bot .bbl{background:var(--card);border:1px solid var(--border);border-bottom-left-radius:3px}
+.pc{background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.22);border-radius:9px;padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:.69rem;color:var(--cyan);line-height:2}
+.pc .st{color:#a5f3fc;font-weight:600}
+pre{background:#0d1117;border:1px solid var(--border);border-radius:9px;padding:12px;overflow-x:auto;font-size:.75rem;font-family:'JetBrains Mono',monospace;color:#86efac;margin-top:5px;line-height:1.6}
+.typ{display:none;align-items:center;gap:9px;padding:0 26px;margin-bottom:5px}
+.typ.on{display:flex}
+.dots{display:flex;gap:5px}.dots span{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:b .9s infinite}
+.dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
+@keyframes b{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
+.typ-t{font-size:.77rem;color:var(--muted);font-style:italic}
+.ibar{padding:13px 20px;background:var(--surface);border-top:1px solid var(--border);display:flex;gap:9px;align-items:flex-end}
+.iwrap{flex:1;position:relative}
+#inp{width:100%;background:var(--card);border:1.5px solid var(--border);border-radius:11px;color:var(--text);font-family:'Inter',sans-serif;font-size:.89rem;padding:12px 42px 12px 15px;resize:none;outline:none;min-height:50px;max-height:126px;transition:border-color .2s;line-height:1.5}
+#inp:focus{border-color:var(--accent)}#inp::placeholder{color:var(--muted)}
+.cc{position:absolute;bottom:8px;right:11px;font-size:.65rem;color:var(--muted)}
+#sbtn{width:50px;height:50px;border-radius:11px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;cursor:pointer;color:#fff;font-size:1.25rem;transition:all .2s;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+#sbtn:hover{transform:scale(1.07);box-shadow:0 0 18px rgba(59,130,246,.5)}
+#sbtn:disabled{opacity:.44;cursor:not-allowed;transform:none}
+.sbr{display:flex;gap:6px;flex-wrap:wrap;padding:0 20px 7px}
+.sbtn{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.24);border-radius:20px;color:#93c5fd;font-size:.69rem;padding:5px 10px;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+.sbtn:hover{background:rgba(59,130,246,.22);border-color:var(--accent)}
+.ws{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:11px;opacity:.48;padding:36px;text-align:center}
+.ws .ic{font-size:3.2rem}.ws h3{font-size:1.05rem;font-weight:600}.ws p{font-size:.82rem;color:var(--muted);max-width:290px;line-height:1.6}
+.sidebar::-webkit-scrollbar{width:4px}.sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+@media(max-width:760px){main{grid-template-columns:1fr;height:auto}.sidebar{max-height:230px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">&#x1F680;</div>
+  <div class="hdr"><h1>PromptCraft Studio</h1><p>GDGoC CUI Wah &mdash; Day 1 Interactive Prompt Engineering Chatbot</p></div>
+  <div class="badge">&#x1F916; Gemini Powered</div>
+</header>
+<main>
+  <aside class="sidebar">
+    <h2>Technique</h2>
+    <div id="tlist"></div>
+  </aside>
+  <section class="chat-area">
+    <div class="msgs" id="msgs">
+      <div class="ws" id="ws">
+        <div class="ic">&#x1F3AF;</div>
+        <h3>Pick a technique, then send a prompt</h3>
+        <p>Select a prompt engineering technique from the sidebar, type your question, and watch PromptCraft engineer it under the hood!</p>
+      </div>
+    </div>
+    <div class="typ" id="typ">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <span class="typ-t">Gemini is thinking&hellip;</span>
+    </div>
+    <div class="sbr" id="sbr"></div>
+    <div class="ibar">
+      <div class="iwrap">
+        <textarea id="inp" rows="1" placeholder="Type your prompt here&hellip; or click a sample above"></textarea>
+        <span class="cc" id="cc">0</span>
+      </div>
+      <button id="sbtn" title="Send (Enter)">&#x27A4;</button>
+    </div>
+  </section>
+</main>
+<script>
+const T={{ techniques|tojson }};
+const S={{ samples|tojson }};
+let act="1";
+const tl=document.getElementById("tlist");
+Object.entries(T).forEach(([k,v])=>{
+  const c=document.createElement("div");
+  c.className="tc"+(k===act?" active":"");c.id="tc"+k;
+  c.innerHTML="<div class=tc-h><div class=tc-n>"+k+"</div><div class=tc-name>"+v.name+"</div></div><div class=tc-desc>"+v.description+"</div>";
+  c.onclick=()=>{document.querySelectorAll(".tc").forEach(x=>x.classList.remove("active"));document.getElementById("tc"+k).classList.add("active");act=k;};
+  tl.appendChild(c);
+});
+const sbr=document.getElementById("sbr");
+S.forEach(s=>{const b=document.createElement("button");b.className="sbtn";b.textContent=s.length>46?s.slice(0,43)+"...":s;b.title=s;b.onclick=()=>{document.getElementById("inp").value=s;uc();};sbr.appendChild(b);});
+const ta=document.getElementById("inp"),cc=document.getElementById("cc");
+function uc(){cc.textContent=ta.value.length;ta.style.height="auto";ta.style.height=Math.min(ta.scrollHeight,126)+"px";}
+ta.oninput=uc;ta.onkeydown=e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();go();}};
+document.getElementById("sbtn").onclick=go;
+function addMsg(role,html,meta){
+  const w=document.getElementById("ws");if(w)w.remove();
+  const m=document.getElementById("msgs");
+  const d=document.createElement("div");d.className="message "+role;
+  const av={user:"&#x1F464;",bot:"&#x1F916;",pipe:"&#x2699;&#xFE0F;"};
+  const nm={user:"You",bot:"PromptCraft AI",pipe:"Pipeline"};
+  d.innerHTML="<div class=av>"+(av[role]||"?")+"</div><div class=mb><div class=mm>"+(nm[role]||role)+(meta?" &middot; "+meta:"")+"</div><div class=bbl>"+html+"</div></div>";
+  m.appendChild(d);m.scrollTop=m.scrollHeight;
+}
+function addPipe(s){
+  const m=document.getElementById("msgs");
+  const d=document.createElement("div");d.className="message pipe";
+  d.innerHTML="<div class=av>&#x2699;&#xFE0F;</div><div class=mb style=max-width:85%><div class=mm>Pipeline Architecture</div><div class=pc>"+s+"</div></div>";
+  m.appendChild(d);m.scrollTop=m.scrollHeight;
+}
+function esc(x){return String(x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function setTyp(v){document.getElementById("typ").classList.toggle("on",v);}
+async function go(){
+  const inp=ta.value.trim();if(!inp)return;
+  const btn=document.getElementById("sbtn");ta.value="";uc();btn.disabled=true;setTyp(true);
+  addMsg("user",esc(inp),T[act].name);
+  try{
+    const r=await fetch("/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({technique:act,prompt:inp})});
+    const d=await r.json();setTyp(false);
+    if(d.error){addMsg("pipe","&#9888; "+esc(d.error));}
+    else{
+      const p=d.pipeline;
+      addPipe("<span class=st>STAGE 1 RAW</span> &#x2192; "+p.raw_tokens+" tokens ("+p.raw_chars+" chars)<br>&#x2193;<br><span class=st>STAGE 2 TECHNIQUE</span> &#x2192; "+esc(p.technique)+"<br>&#x2193;<br><span class=st>STAGE 3 CONTEXT</span> &#x2192; "+p.eng_tokens+" tokens ("+p.multiplier+"x expansion)<br>&#x2193;<br><span class=st>STAGE 4 GEMINI</span> &#x2192; Latency "+p.latency+"s<br>&#x2193;<br><span class=st>STAGE 5 OUTPUT</span> &#x2192; "+esc(p.output_type));
+      addMsg("bot",d.is_json?"<pre>"+esc(JSON.stringify(d.response,null,2))+"</pre>":"<div style=white-space:pre-wrap>"+esc(d.response)+"</div>",p.latency+"s");
+    }
+  }catch(e){setTyp(false);addMsg("pipe","&#9888; Network error: "+esc(e.message));}
+  btn.disabled=false;ta.focus();
+}
+</script>
+</body>
+</html>
